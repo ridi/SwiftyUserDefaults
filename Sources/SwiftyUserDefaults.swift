@@ -190,13 +190,18 @@ public class DefaultsKeys {
 
 /// Base class for static user defaults keys. Specialize with value type
 /// and pass key name to the initializer to create a key.
+/// defaultValue can be used as a fallback for this key.
 
 public class DefaultsKey<ValueType>: DefaultsKeys {
     // TODO: Can we use protocols to ensure ValueType is a compatible type?
     public let _key: String
     
-    public init(_ key: String) {
+    public init(_ key: String, _ defaultValue: ValueType? = nil) {
         self._key = key
+        
+        if !Defaults.hasKey(key), let object = defaultValue as? AnyObject {
+            Defaults.registerDefaults([key: object])
+        }
     }
 }
 

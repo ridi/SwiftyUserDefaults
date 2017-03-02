@@ -578,6 +578,15 @@ class SwiftyUserDefaultsTests: XCTestCase {
         Defaults[key] = nil
         XCTAssert(Defaults[key] == nil)
     }
+    
+    // --
+    
+    func testDefaultValue() {
+        let key = DefaultsKey<Bool>("enabled", true)
+        XCTAssert(Defaults[key] == true)
+        let onceCheck = DefaultsKey<Bool>("enabled", false)
+        XCTAssert(Defaults[onceCheck] == true)
+    }
 }
 
 extension DefaultsKeys {
